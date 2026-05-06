@@ -1,8 +1,8 @@
-# Git Time Machine
+# Git Rewind
 
 Browse a file's git history with rename-aware diffs, conventional-commit cues, pickaxe search, and side-by-side compare. No LOC limits, no external services, no telemetry.
 
-![Git Time Machine panel](media/screenshot.png)
+![Git Rewind panel](media/screenshot.png)
 
 ## Features
 
@@ -26,7 +26,7 @@ Open any file in a Git repository, then:
 - **Right-click in editor** → "View File History"
 - **Right-click in Explorer** → "View File History"
 - **Keyboard** → `Alt+Cmd+H` (macOS) / `Alt+Ctrl+H` (Windows/Linux)
-- **Command palette** → "Git Time Machine: View File History"
+- **Command palette** → "Git Rewind: View File History"
 
 ### Keyboard shortcuts (inside the panel)
 
@@ -42,10 +42,10 @@ Open any file in a Git repository, then:
 
 ### Commands
 
-- `Git Time Machine: View File History`
-- `Git Time Machine: Refresh File History`
-- `Git Time Machine: Next Commit`
-- `Git Time Machine: Previous Commit`
+- `Git Rewind: View File History`
+- `Git Rewind: Refresh File History`
+- `Git Rewind: Next Commit`
+- `Git Rewind: Previous Commit`
 
 ## Requirements
 

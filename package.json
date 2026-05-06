@@ -1,18 +1,18 @@
 {
-  "name": "git-time-machine",
-  "displayName": "Git Time Machine",
+  "name": "git-rewind",
+  "displayName": "Git Rewind",
   "description": "Browse a file's git history with rename-aware diffs, conventional-commit cues, pickaxe search, and side-by-side compare.",
   "version": "0.1.0",
   "publisher": "jiri",
   "license": "MIT",
   "icon": "media/icon.png",
-  "homepage": "https://github.com/JiriMachynka/git-time-machine#readme",
+  "homepage": "https://github.com/JiriMachynka/git-rewind#readme",
   "repository": {
     "type": "git",
-    "url": "https://github.com/JiriMachynka/git-time-machine.git"
+    "url": "https://github.com/JiriMachynka/git-rewind.git"
   },
   "bugs": {
-    "url": "https://github.com/JiriMachynka/git-time-machine/issues"
+    "url": "https://github.com/JiriMachynka/git-rewind/issues"
   },
   "keywords": [
     "git",
@@ -34,51 +34,51 @@
   "contributes": {
     "commands": [
       {
-        "command": "gitTimeMachine.viewFileHistory",
+        "command": "gitRewind.viewFileHistory",
         "title": "View File History",
-        "category": "Git Time Machine",
+        "category": "Git Rewind",
         "icon": "$(history)"
       },
       {
-        "command": "gitTimeMachine.refresh",
+        "command": "gitRewind.refresh",
         "title": "Refresh File History",
-        "category": "Git Time Machine",
+        "category": "Git Rewind",
         "icon": "$(refresh)"
       },
       {
-        "command": "gitTimeMachine.openDiff",
+        "command": "gitRewind.openDiff",
         "title": "Open Commit Diff",
-        "category": "Git Time Machine"
+        "category": "Git Rewind"
       },
       {
-        "command": "gitTimeMachine.next",
+        "command": "gitRewind.next",
         "title": "Next Commit",
-        "category": "Git Time Machine"
+        "category": "Git Rewind"
       },
       {
-        "command": "gitTimeMachine.prev",
+        "command": "gitRewind.prev",
         "title": "Previous Commit",
-        "category": "Git Time Machine"
+        "category": "Git Rewind"
       }
     ],
     "menus": {
       "editor/title": [
         {
-          "command": "gitTimeMachine.viewFileHistory",
+          "command": "gitRewind.viewFileHistory",
           "when": "resourceScheme == file",
           "group": "navigation@99"
         }
       ],
       "editor/context": [
         {
-          "command": "gitTimeMachine.viewFileHistory",
+          "command": "gitRewind.viewFileHistory",
           "when": "resourceScheme == file",
           "group": "navigation"
         }
       ],
       "explorer/context": [
         {
-          "command": "gitTimeMachine.viewFileHistory",
+          "command": "gitRewind.viewFileHistory",
           "when": "resourceScheme == file",
           "group": "navigation"
         }
@@ -86,7 +86,7 @@
     },
     "keybindings": [
       {
-        "command": "gitTimeMachine.viewFileHistory",
+        "command": "gitRewind.viewFileHistory",
         "key": "alt+cmd+h",
         "mac": "alt+cmd+h",
         "win": "alt+ctrl+h",
@@ -94,9 +94,9 @@
         "when": "editorTextFocus"
       },
       {
-        "command": "gitTimeMachine.refresh",
+        "command": "gitRewind.refresh",
         "key": "alt+r",
-        "when": "activeWebviewPanelId == 'gitTimeMachine.panel'"
+        "when": "activeWebviewPanelId == 'gitRewind.panel'"
       }
     ]
   },

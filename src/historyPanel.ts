@@ -20,7 +20,7 @@ export interface RenderedLine {
 }
 
 const PANELS = new Map<string, HistoryPanel>();
-const LAST_SHA_KEY = "gitTimeMachine.lastSha:";
+const LAST_SHA_KEY = "gitRewind.lastSha:";
 
 const CC_TYPE_RE =
   /^(feat|fix|docs|style|refactor|perf|test|build|ci|chore|revert)(\([^)]+\))?(!)?:/i;
@@ -66,7 +66,7 @@ export class HistoryPanel {
       return;
     }
     const panel = vscode.window.createWebviewPanel(
-      "gitTimeMachine.panel",
+      "gitRewind.panel",
       `History: ${path.basename(filePath)}`,
       vscode.ViewColumn.Active,
       {
@@ -157,7 +157,7 @@ export class HistoryPanel {
         this.getRememberedSha() ?? this.state.commits[0]?.sha;
       if (initialSha) void this.postCommitView(initialSha);
     } catch (e) {
-      console.error("[git-time-machine] postInit failed:", e);
+      console.error("[git-rewind] postInit failed:", e);
       this.panel.webview.postMessage({
         type: "fatal",
         message:

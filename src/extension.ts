@@ -7,7 +7,7 @@ export function activate(ctx: vscode.ExtensionContext): void {
   // Dispose them on restore; user reopens via the command.
   if (vscode.window.registerWebviewPanelSerializer) {
     ctx.subscriptions.push(
-      vscode.window.registerWebviewPanelSerializer("gitTimeMachine.panel", {
+      vscode.window.registerWebviewPanelSerializer("gitRewind.panel", {
         async deserializeWebviewPanel(panel) {
           panel.dispose();
         },
@@ -17,7 +17,7 @@ export function activate(ctx: vscode.ExtensionContext): void {
 
   ctx.subscriptions.push(
     vscode.commands.registerCommand(
-      "gitTimeMachine.viewFileHistory",
+      "gitRewind.viewFileHistory",
       async (resource?: vscode.Uri) => {
         const target =
           resource?.fsPath ??
@@ -31,13 +31,13 @@ export function activate(ctx: vscode.ExtensionContext): void {
         await HistoryPanel.openFor(ctx.extensionUri, target, ctx.workspaceState);
       },
     ),
-    vscode.commands.registerCommand("gitTimeMachine.refresh", () => {
+    vscode.commands.registerCommand("gitRewind.refresh", () => {
       HistoryPanel.active?.refresh();
     }),
-    vscode.commands.registerCommand("gitTimeMachine.next", () => {
+    vscode.commands.registerCommand("gitRewind.next", () => {
       HistoryPanel.active?.step(1);
     }),
-    vscode.commands.registerCommand("gitTimeMachine.prev", () => {
+    vscode.commands.registerCommand("gitRewind.prev", () => {
       HistoryPanel.active?.step(-1);
     }),
   );

@@ -3,10 +3,10 @@
   const vscode = acquireVsCodeApi();
 
   window.addEventListener('error', (e) => {
-    console.error('[git-time-machine] error:', e.error || e.message);
+    console.error('[git-rewind] error:', e.error || e.message);
   });
   window.addEventListener('unhandledrejection', (e) => {
-    console.error('[git-time-machine] unhandled rejection:', e.reason);
+    console.error('[git-rewind] unhandled rejection:', e.reason);
   });
 
   const stripEl = document.getElementById('strip');
@@ -38,7 +38,7 @@
   window.addEventListener('message', (e) => {
     const m = e.data;
     if (m.type === 'fatal') {
-      console.error('[git-time-machine] fatal:', m.message);
+      console.error('[git-rewind] fatal:', m.message);
       return;
     }
     if (m.type === 'init') {

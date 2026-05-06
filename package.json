@@ -2,7 +2,7 @@
   "name": "git-rewind",
   "displayName": "Git Rewind",
   "description": "Browse a file's git history with rename-aware diffs, conventional-commit cues, pickaxe search, and side-by-side compare.",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "publisher": "jiri",
   "license": "MIT",
   "icon": "media/icon.png",

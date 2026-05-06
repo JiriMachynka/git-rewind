@@ -1,0 +1,124 @@
+{
+  "name": "git-time-machine",
+  "displayName": "Git Time Machine",
+  "description": "Browse a file's git history with rename-aware diffs, conventional-commit cues, pickaxe search, and side-by-side compare.",
+  "version": "0.1.0",
+  "publisher": "jiri",
+  "license": "MIT",
+  "icon": "media/icon.png",
+  "homepage": "https://github.com/JiriMachynka/git-time-machine#readme",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/JiriMachynka/git-time-machine.git"
+  },
+  "bugs": {
+    "url": "https://github.com/JiriMachynka/git-time-machine/issues"
+  },
+  "keywords": [
+    "git",
+    "history",
+    "diff",
+    "blame",
+    "log",
+    "file history",
+    "rename",
+    "conventional commits",
+    "pickaxe"
+  ],
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "categories": ["SCM Providers", "Other"],
+  "activationEvents": ["onStartupFinished"],
+  "main": "./dist/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "gitTimeMachine.viewFileHistory",
+        "title": "View File History",
+        "category": "Git Time Machine",
+        "icon": "$(history)"
+      },
+      {
+        "command": "gitTimeMachine.refresh",
+        "title": "Refresh File History",
+        "category": "Git Time Machine",
+        "icon": "$(refresh)"
+      },
+      {
+        "command": "gitTimeMachine.openDiff",
+        "title": "Open Commit Diff",
+        "category": "Git Time Machine"
+      },
+      {
+        "command": "gitTimeMachine.next",
+        "title": "Next Commit",
+        "category": "Git Time Machine"
+      },
+      {
+        "command": "gitTimeMachine.prev",
+        "title": "Previous Commit",
+        "category": "Git Time Machine"
+      }
+    ],
+    "menus": {
+      "editor/title": [
+        {
+          "command": "gitTimeMachine.viewFileHistory",
+          "when": "resourceScheme == file",
+          "group": "navigation@99"
+        }
+      ],
+      "editor/context": [
+        {
+          "command": "gitTimeMachine.viewFileHistory",
+          "when": "resourceScheme == file",
+          "group": "navigation"
+        }
+      ],
+      "explorer/context": [
+        {
+          "command": "gitTimeMachine.viewFileHistory",
+          "when": "resourceScheme == file",
+          "group": "navigation"
+        }
+      ]
+    },
+    "keybindings": [
+      {
+        "command": "gitTimeMachine.viewFileHistory",
+        "key": "alt+cmd+h",
+        "mac": "alt+cmd+h",
+        "win": "alt+ctrl+h",
+        "linux": "alt+ctrl+h",
+        "when": "editorTextFocus"
+      },
+      {
+        "command": "gitTimeMachine.refresh",
+        "key": "alt+r",
+        "when": "activeWebviewPanelId == 'gitTimeMachine.panel'"
+      }
+    ]
+  },
+  "scripts": {
+    "build": "esbuild src/extension.ts --bundle --outfile=dist/extension.js --external:vscode --external:shiki --format=cjs --platform=node --target=node18",
+    "watch": "bun run build -- --watch",
+    "typecheck": "tsc --noEmit",
+    "package": "bun run build --minify",
+    "vscode:prepublish": "bun run typecheck && bun run package",
+    "vsix": "vsce package",
+    "publish:vsce": "vsce publish",
+    "publish:ovsx": "ovsx publish"
+  },
+  "devDependencies": {
+    "@types/diff": "^8.0.0",
+    "@types/node": "^20.11.0",
+    "@types/vscode": "^1.85.0",
+    "esbuild": "^0.24.0",
+    "typescript": "^5.4.0"
+  },
+  "dependencies": {
+    "diff": "^9.0.0",
+    "shiki": "^4.0.2"
+  }
+}

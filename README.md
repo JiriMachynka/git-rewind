@@ -1,5 +1,10 @@
 # Git Rewind
 
+[![Version](https://img.shields.io/visual-studio-marketplace/v/jiri.git-rewind?label=marketplace)](https://marketplace.visualstudio.com/items?itemName=jiri.git-rewind)
+[![Installs](https://img.shields.io/visual-studio-marketplace/i/jiri.git-rewind)](https://marketplace.visualstudio.com/items?itemName=jiri.git-rewind)
+[![Rating](https://img.shields.io/visual-studio-marketplace/r/jiri.git-rewind)](https://marketplace.visualstudio.com/items?itemName=jiri.git-rewind&ssr=false#review-details)
+[![License](https://img.shields.io/github/license/JiriMachynka/git-rewind)](LICENSE)
+
 Browse a file's git history with rename-aware diffs, conventional-commit cues, pickaxe search, and side-by-side compare. No LOC limits, no external services, no telemetry.
 
 ![Git Rewind panel](media/screenshot.png)

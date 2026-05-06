@@ -2,7 +2,7 @@
   "name": "git-rewind",
   "displayName": "Git Rewind",
   "description": "Browse a file's git history with rename-aware diffs, conventional-commit cues, pickaxe search, and side-by-side compare.",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "publisher": "jiri",
   "license": "MIT",
   "icon": "media/icon.png",
@@ -101,7 +101,7 @@
     ]
   },
   "scripts": {
-    "build": "esbuild src/extension.ts --bundle --outfile=dist/extension.js --external:vscode --external:shiki --format=cjs --platform=node --target=node18",
+    "build": "esbuild src/extension.ts --bundle --outfile=dist/extension.js --external:vscode --format=cjs --platform=node --target=node18",
     "watch": "bun run build -- --watch",
     "typecheck": "tsc --noEmit",
     "package": "bun run build --minify",

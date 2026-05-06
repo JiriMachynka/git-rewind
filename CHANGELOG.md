@@ -3,6 +3,12 @@
 All notable changes to **Git Rewind** are documented here.
 Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and the project adheres to [Semantic Versioning](https://semver.org/).
 
+## [0.1.2] — 2026-05-06
+
+### Changed
+- Bundle Shiki with fine-grained language/theme imports and the JavaScript regex engine. VSIX size dropped from 10.59 MB to ~445 KB.
+- Drop unused `media/icon.svg` and `media/git-rewind.png` from the package.
+
 ## [0.1.1] — 2026-05-06
 
 ### Changed

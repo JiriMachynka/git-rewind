@@ -1,10 +1,51 @@
 import * as path from "node:path";
-import type { Highlighter, BundledLanguage, BundledTheme } from "shiki";
+import { createHighlighterCore, type HighlighterCore } from "shiki/core";
+import { createJavaScriptRegexEngine } from "shiki/engine/javascript";
+import githubDark from "shiki/themes/github-dark.mjs";
+import githubLight from "shiki/themes/github-light.mjs";
 
-let highlighterPromise: Promise<Highlighter> | null = null;
-const loadedLangs = new Set<BundledLanguage>();
+type LangLoader = () => Promise<{ default: unknown }>;
 
-const EXT_TO_LANG: Record<string, BundledLanguage> = {
+const LANG_LOADERS: Record<string, LangLoader> = {
+  typescript: () => import("shiki/langs/typescript.mjs"),
+  tsx: () => import("shiki/langs/tsx.mjs"),
+  javascript: () => import("shiki/langs/javascript.mjs"),
+  jsx: () => import("shiki/langs/jsx.mjs"),
+  vue: () => import("shiki/langs/vue.mjs"),
+  svelte: () => import("shiki/langs/svelte.mjs"),
+  python: () => import("shiki/langs/python.mjs"),
+  ruby: () => import("shiki/langs/ruby.mjs"),
+  go: () => import("shiki/langs/go.mjs"),
+  rust: () => import("shiki/langs/rust.mjs"),
+  java: () => import("shiki/langs/java.mjs"),
+  kotlin: () => import("shiki/langs/kotlin.mjs"),
+  swift: () => import("shiki/langs/swift.mjs"),
+  c: () => import("shiki/langs/c.mjs"),
+  cpp: () => import("shiki/langs/cpp.mjs"),
+  csharp: () => import("shiki/langs/csharp.mjs"),
+  php: () => import("shiki/langs/php.mjs"),
+  shell: () => import("shiki/langs/shellscript.mjs"),
+  json: () => import("shiki/langs/json.mjs"),
+  jsonc: () => import("shiki/langs/jsonc.mjs"),
+  yaml: () => import("shiki/langs/yaml.mjs"),
+  toml: () => import("shiki/langs/toml.mjs"),
+  markdown: () => import("shiki/langs/markdown.mjs"),
+  mdx: () => import("shiki/langs/mdx.mjs"),
+  html: () => import("shiki/langs/html.mjs"),
+  css: () => import("shiki/langs/css.mjs"),
+  scss: () => import("shiki/langs/scss.mjs"),
+  sass: () => import("shiki/langs/sass.mjs"),
+  less: () => import("shiki/langs/less.mjs"),
+  sql: () => import("shiki/langs/sql.mjs"),
+  xml: () => import("shiki/langs/xml.mjs"),
+  docker: () => import("shiki/langs/docker.mjs"),
+  lua: () => import("shiki/langs/lua.mjs"),
+  zig: () => import("shiki/langs/zig.mjs"),
+};
+
+export type LangId = keyof typeof LANG_LOADERS;
+
+const EXT_TO_LANG: Record<string, LangId> = {
   ts: "typescript",
   tsx: "tsx",
   js: "javascript",
@@ -51,24 +92,24 @@ const EXT_TO_LANG: Record<string, BundledLanguage> = {
 
 export type ThemeKind = "dark" | "light";
 
-const DARK_THEME: BundledTheme = "github-dark";
-const LIGHT_THEME: BundledTheme = "github-light";
+const DARK_THEME = "github-dark";
+const LIGHT_THEME = "github-light";
 
-async function getHighlighter(): Promise<Highlighter> {
+let highlighterPromise: Promise<HighlighterCore> | null = null;
+const loadedLangs = new Set<string>();
+
+async function getHighlighter(): Promise<HighlighterCore> {
   if (!highlighterPromise) {
-    const { createHighlighter } = await import("shiki");
-    highlighterPromise = createHighlighter({
-      themes: [DARK_THEME, LIGHT_THEME],
-      langs: ["typescript", "javascript", "json", "vue"],
+    highlighterPromise = createHighlighterCore({
+      themes: [githubDark, githubLight],
+      langs: [],
+      engine: createJavaScriptRegexEngine(),
     });
-    for (const l of ["typescript", "javascript", "json", "vue"] as const) {
-      loadedLangs.add(l);
-    }
   }
   return highlighterPromise;
 }
 
-export function langForFile(filename: string): BundledLanguage | "text" {
+export function langForFile(filename: string): LangId | "text" {
   const base = path.basename(filename).toLowerCase();
   if (base === "dockerfile") return "docker";
   const ext = path.extname(filename).slice(1).toLowerCase();
@@ -82,7 +123,7 @@ export interface HighlightedLines {
 
 export async function highlightLines(
   text: string,
-  lang: BundledLanguage | "text",
+  lang: LangId | "text",
   theme: ThemeKind,
 ): Promise<HighlightedLines> {
   if (text.length === 0) return { lines: [] };
@@ -90,10 +131,16 @@ export async function highlightLines(
   const themeName = theme === "dark" ? DARK_THEME : LIGHT_THEME;
 
   if (lang !== "text" && !loadedLangs.has(lang)) {
-    try {
-      await hl.loadLanguage(lang);
-      loadedLangs.add(lang);
-    } catch {
+    const loader = LANG_LOADERS[lang];
+    if (loader) {
+      try {
+        const mod = await loader();
+        await hl.loadLanguage(mod.default as never);
+        loadedLangs.add(lang);
+      } catch {
+        lang = "text";
+      }
+    } else {
       lang = "text";
     }
   }
